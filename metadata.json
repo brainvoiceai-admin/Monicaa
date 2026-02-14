@@ -1,0 +1,7 @@
+{
+  "name": "Monica AI - Advanced Skin Care",
+  "description": "An AI-powered dermatological companion that analyzes skin texture, tracks recovery trends, and provides personalized skincare routines.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
