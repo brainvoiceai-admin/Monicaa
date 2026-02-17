@@ -1,7 +1,12 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+function getAi() {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY is not set. Add it to your .env file.');
+  }
+  return new GoogleGenAI({ apiKey });
+}
 
 export interface DiagnosticResult {
   classification: string;
@@ -26,6 +31,7 @@ export interface DiagnosticResult {
 }
 
 export const diagnoseSkinCondition = async (imageBase64: string): Promise<DiagnosticResult> => {
+  const ai = getAi();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: {
@@ -100,6 +106,7 @@ export const diagnoseSkinCondition = async (imageBase64: string): Promise<Diagno
 };
 
 export const getAiChatResponse = async (message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[]) => {
+  const ai = getAi();
   const chat = ai.chats.create({
     model: 'gemini-3-flash-preview',
     config: {
